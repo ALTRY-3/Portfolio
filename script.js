@@ -185,6 +185,56 @@ window.addEventListener('load', function() {
     }, 100);
 });
 
+// Dynamic greeting based on time of day
+function setDynamicGreeting() {
+    const greetingElement = document.getElementById('dynamic-greeting');
+    const hour = new Date().getHours();
+    
+    let greeting;
+    if (hour >= 5 && hour < 12) {
+        greeting = 'Good Morning';
+    } else if (hour >= 12 && hour < 18) {
+        greeting = 'Good Afternoon';
+    } else {
+        greeting = 'Good Evening';
+    }
+    
+    if (greetingElement) {
+        greetingElement.textContent = greeting;
+    }
+}
+
+// Set greeting on page load
+setDynamicGreeting();
+
+// Theme toggle functionality
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+const themeIcon = themeToggle.querySelector('i');
+
+// Check for saved theme preference or default to dark mode
+const currentTheme = localStorage.getItem('theme') || 'dark';
+if (currentTheme === 'light') {
+    body.classList.add('light-mode');
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+}
+
+themeToggle.addEventListener('click', () => {
+    body.classList.toggle('light-mode');
+    
+    // Update icon
+    if (body.classList.contains('light-mode')) {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+    } else {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+    }
+});
+
 // Typing animation with Typed.js
 const typed = new Typed('.type-text span', {
     strings: [
